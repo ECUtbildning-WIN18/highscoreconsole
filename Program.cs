@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Net.Http;
+using HighscoreConsole.Entities;
 using HighscoreConsole.Services;
 using HighscoreConsole.Views;
 using static System.Console;
@@ -17,7 +18,7 @@ namespace HighscoreConsole
             httpClient.BaseAddress = new Uri("https://localhost:5001/api/");
 
             var scoreService = new ScoreService(httpClient);
-
+            var gameService = new GameService(httpClient);
 
             var isRunning = true;
 
@@ -33,19 +34,63 @@ namespace HighscoreConsole
 
                         ListHighScoreView.Display(scoreService);
 
-                        ReadKey(true);
+                        var listHighScoreSelection = ReadKey(true);
+
+                        if (listHighScoreSelection.Key != E)
+                        {
+                            var scoreId = Convert.ToInt32(ReadLine());
+                            
+                            var score = ListHighScoreView.DisplayById(scoreId, scoreService);
+
+                            var listByIdSelection = ReadKey(true);
+                            if (listByIdSelection.Key == R)
+                            {
+                               var task=  scoreService.DeleteHighscoreAsync(score.Id);
+                               task.Wait();
+                            }
+                        }
 
                         break;
                     case D2:
+                        
                         var gameView = new ListGamesView(httpClient);
 
                         gameView.ListGames();
 
-                        var gameId = int.Parse(ReadLine());
+                        var listGamesSelection = ReadKey(true);
 
-                        gameView.ListGameById(gameId);
+                        if (listGamesSelection.Key != E)
+                        {
+                            var gameId = Convert.ToInt32(ReadLine());
+                            
+                            var game = gameView.ListGameById(gameId);
 
-                        ReadKey(true);
+                            var listByIdSelection = ReadKey(true);
+                            if (listByIdSelection.Key == R)
+                            {
+                                StandardMessages.DisplayAreYouSure();
+                                var yesOrNo = ReadKey(true).Key;
+                                if (yesOrNo == Y)
+                                {
+                                    var task = gameService.DeleteGameAsync(game.Id);
+                                    task.Wait();
+                                }
+                            }
+
+                            if (listByIdSelection.Key == U)
+                            {
+                                gameView.DisplayUpdateGame();
+                                var newTitle = ReadLine();
+                                var newDescription = ReadLine();
+
+                                var task = gameService.PutGameAsync(game.Id,
+                                    new Game {Description = newDescription, Title = newTitle, Id = game.Id});
+                                task.Wait();
+
+                                var newGameView = gameView.ListGameById(game.Id);
+                                ReadKey(true);
+                            }
+                        }
 
                         break;
 

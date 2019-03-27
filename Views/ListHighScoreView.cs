@@ -1,3 +1,4 @@
+using HighscoreConsole.Entities;
 using HighscoreConsole.Services;
 using static System.Console;
 
@@ -17,16 +18,15 @@ namespace HighscoreConsole.Views
 
             foreach (var highscore in highscores)
             {
-                WriteLine($"{highscore.Game.Title}\t\t{highscore.Player.Alias}\t\t{highscore.Points}");
+                WriteLine($"{highscore.Id}\t\t {highscore.Game.Title}\t\t{highscore.Player.Alias}\t\t{highscore.Points}");
             }
 
             WriteLine("(E)xit");
 
-            WriteLine("Id: ");
-
+            WriteLine("Press enter to search by id. ID> ");
         }
 
-        public static void DisplayById(int id, ScoreService scoreService)
+        public static Score DisplayById(int id, ScoreService scoreService)
         {
             Clear();
 
@@ -41,6 +41,7 @@ namespace HighscoreConsole.Views
             WriteLine("(R)emove");
             WriteLine("(E)xit");
 
+            return task.Result;
         }
     }
 }

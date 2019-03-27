@@ -2,15 +2,13 @@ using static System.Console;
 
 namespace HighscoreConsole.Views
 {
-    public class StandardMessages
+    public static class StandardMessages
     {
-        public void Display()
+        public static void DisplayAreYouSure()
         {
             Clear();
 
             WriteLine("Are you sure? Y/N");
-
-
         }
     }
 }

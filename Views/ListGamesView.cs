@@ -30,10 +30,11 @@ namespace HighscoreConsole.Views
                 WriteLine($"{game.Id}\t\t{game.Title}");
             }
 
-            WriteLine("ID> ");
+            WriteLine("(E)xit");
+            WriteLine("Press enter to type id. ID> ");
         }
 
-        public void ListGameById(int id)
+        public Game ListGameById(int id)
         {
             Clear();
             var getGameByIdTask = _service.GetGameByIdAsync(id);
@@ -42,11 +43,32 @@ namespace HighscoreConsole.Views
 
             var mygame = getGameByIdTask.Result;
 
+            
             WriteLine($"Title: {mygame.Title}");
             WriteLine($"Description: {mygame.Description}");
 
-            WriteLine("1. Update game");
-            WriteLine("2. Remove game");
+            WriteLine("(U) Update game");
+            WriteLine("(R) Remove game");
+            WriteLine("(E)xit");
+
+            return mygame;
+        }
+
+        public void DisplayRemovedGame(Game game)
+        {
+            Clear();
+            
+            WriteLine($"You just removed {game.Title}");
+            WriteLine("(Enter) ok");
+        }
+
+        public void DisplayUpdateGame()
+        {
+            Clear();
+            
+            WriteLine("New Title: ");
+            WriteLine("New Description: /n/n");
+            WriteLine("(Enter) ok");
         }
     }
 }

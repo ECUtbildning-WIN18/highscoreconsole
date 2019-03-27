@@ -20,19 +20,27 @@ namespace HighscoreConsole.Views
                 WriteLine($"{highscore.Game.Title}\t\t{highscore.Player.Alias}\t\t{highscore.Points}");
             }
 
-
-
-
             WriteLine("(E)xit");
 
             WriteLine("Id: ");
 
+        }
 
-            //ID och enter ....ger annan view/metod
+        public static void DisplayById(int id, ScoreService scoreService)
+        {
+            Clear();
 
+            var task = scoreService.GetHighScoreByIdAsync(id);
 
+            task.Wait();
 
-            //Read och Delete
+            var highscore = task.Result;
+
+            WriteLine($"{highscore.Game.Title}\t\t{highscore.Player.Alias}\t\t{highscore.Points}");
+
+            WriteLine("(R)emove");
+            WriteLine("(E)xit");
+
         }
     }
 }

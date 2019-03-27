@@ -13,5 +13,4 @@ namespace HighscoreConsole.Views
 
         }
     }
-
 }

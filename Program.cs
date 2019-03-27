@@ -17,7 +17,7 @@ namespace HighscoreConsole
             httpClient.BaseAddress = new Uri("https://localhost:5001/api/");
 
             var scoreService = new ScoreService(httpClient);
-            
+
 
             var isRunning = true;
 
@@ -40,7 +40,7 @@ namespace HighscoreConsole
                         var gameView = new ListGamesView(httpClient);
 
                         gameView.ListGames();
-                        
+
                         var gameId = int.Parse(ReadLine());
 
                         gameView.ListGameById(gameId);

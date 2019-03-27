@@ -30,5 +30,20 @@ namespace HighscoreConsole.Services
 
            return highscores;
        }
+
+        public async Task<Score> DeleteHighscoreAsync(int id)
+        {
+            var response = await _httpClient.DeleteAsync($"scores/{id}");
+
+            Score score;
+            if (response.IsSuccessStatusCode)
+            {
+                score = await response.Content.ReadAsAsync<Score>();
+                return score;
+            }
+
+            score = null;
+            return score;
+        }
    }
 }

@@ -17,7 +17,7 @@ namespace HighscoreConsole
             httpClient.BaseAddress = new Uri("https://localhost:5001/api/");
 
             var scoreService = new ScoreService(httpClient);
-            var gameService = new GameService(httpClient);
+            
 
             var isRunning = true;
 
@@ -58,30 +58,13 @@ namespace HighscoreConsole
 
                         break;
                     case D2:
+                        var gameView = new ListGamesView(httpClient);
 
-                        Clear();
-                        var getGamesTask = gameService.GetGamesAsync();
-
-                        getGamesTask.Wait();
-
-                        var games = getGamesTask.Result;
-
-                        foreach (var game in games)
-                        {
-                            WriteLine($"{game.Id}\t\t{game.Title}");
-                        }
-
-                        WriteLine("ID> ");
-
+                        gameView.ListGames();
+                        
                         var gameId = int.Parse(ReadLine());
 
-                        var getGameByIdTask = gameService.GetGameByIdAsync(gameId);
-
-                        getGameByIdTask.Wait();
-
-                        var mygame = getGameByIdTask.Result;
-
-                        WriteLine(mygame.Title);
+                        gameView.ListGameById(gameId);
 
                         ReadKey(true);
 

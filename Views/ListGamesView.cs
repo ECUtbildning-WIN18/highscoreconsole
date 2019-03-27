@@ -42,7 +42,11 @@ namespace HighscoreConsole.Views
 
             var mygame = getGameByIdTask.Result;
 
-            WriteLine(mygame.Title);
+            WriteLine($"Title: {mygame.Title}");
+            WriteLine($"Description: {mygame.Description}");
+
+            WriteLine("1. Update game");
+            WriteLine("2. Remove game");
         }
     }
 }

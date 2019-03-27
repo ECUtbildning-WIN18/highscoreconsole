@@ -1,8 +1,10 @@
+using static System.Console;
+
 namespace HighscoreConsole.Views
 {
     public class MainMenuView
     {
-        public void Display()
+        public static void Display()
         {
             Clear();
             WriteLine("1. List highscores");

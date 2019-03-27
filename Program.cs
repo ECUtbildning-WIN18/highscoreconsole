@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Net.Http;
 using HighscoreConsole.Services;
+using HighscoreConsole.Views;
 using static System.Console;
 using static System.ConsoleKey;
 
@@ -8,7 +9,7 @@ namespace HighscoreConsole
 {
     class Program
     {
-         
+
         static readonly HttpClient httpClient = new HttpClient();
 
         static void Main(string[] args)
@@ -22,6 +23,14 @@ namespace HighscoreConsole
 
             while (isRunning)
             {
+                MainMenuView.Display();
+
+
+
+
+
+
+
                 Clear();
                 WriteLine("1. List highscores");
                 WriteLine("2. List games");
@@ -33,7 +42,7 @@ namespace HighscoreConsole
                 {
                     case D1:
                         Clear();
-                        
+
                         var task = scoreService.GetHighscoresAsync();
 
                         task.Wait();
@@ -65,7 +74,7 @@ namespace HighscoreConsole
                         WriteLine("ID> ");
 
                         var gameId = int.Parse(ReadLine());
-                        
+
                         var getGameByIdTask = gameService.GetGameByIdAsync(gameId);
 
                         getGameByIdTask.Wait();
@@ -73,7 +82,7 @@ namespace HighscoreConsole
                         var mygame = getGameByIdTask.Result;
 
                         WriteLine(mygame.Title);
-                        
+
                         ReadKey(true);
 
                         break;
